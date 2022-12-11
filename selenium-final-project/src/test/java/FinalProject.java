@@ -15,7 +15,6 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class FinalProject {
@@ -24,7 +23,7 @@ public class FinalProject {
 //    @BeforeTest
 //    public void beforeTest() {
 //
-//         single browser
+//        // single browser
 //        WebDriverManager.chromedriver().setup();
 //        driver = new ChromeDriver();
 //        driver.manage().window().maximize();
@@ -97,22 +96,11 @@ public class FinalProject {
         eastPoint.click();
 
         // - Check that only ‘კავეა ისთ ფოინთი’ options are returned
-        List<WebElement> options = driver.findElements(By.xpath("//p[@class='cinema-title']"));
-        List<WebElement> caveas = new ArrayList<>();
+        List<WebElement> shownCinemas = driver.findElements(By.xpath("//div[@id = '384933']//div[contains(@id, 'day-choose') and @aria-hidden = 'false']//p[text() = 'კავეა ისთ ფოინთი']"));
+        String expectedCinema = "კავეა ისთ ფოინთი";
 
-        int count = 0;
-        String str = "კავეა ისთ ფოინთი";
-        for (int option = 0; option < options.size(); option++) {
-            String cinema = options.get(option).getText();
-            if (cinema.equals(str)) {
-                caveas.add(options.get(option));
-            }
-        }
-
-        for (int cinema = 0; cinema < caveas.size(); cinema++) {
-            String str1 = caveas.get(cinema).getText();
-            String str2 = "კავეა ისთ ფოინთი";
-            Assert.assertEquals(str1, str2);
+        for (WebElement cinema : shownCinemas) {
+            Assert.assertEquals(cinema.getText(), expectedCinema);
         }
 
         WebElement lastDate = driver.findElement(By.xpath("//div[@id='384933']/child::div/child::ul/child::li[last()]"));
